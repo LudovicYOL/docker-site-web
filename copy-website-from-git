@@ -1,7 +1,0 @@
-#!/bin/bash
-
-mkdir /tmp/git
-git clone https://github.com/LudovicYOL/site-web-2018.git /tmp/git
-rsync -av --exclude=.git /tmp/git/ /var/www/html/
-
-/usr/local/bin/run-nginx &

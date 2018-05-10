@@ -1,10 +1,11 @@
-FROM nginx:latest
+FROM nginx:alpine
+MAINTAINER ludovic.yol@gmail.com
 
-RUN apt-get update && apt-get install -y \
-  git
+RUN apk add --no-cache git \
+ && git clone https://github.com/LudovicYOL/site-web-2015.git /site-web \
+ && git clone https://github.com/LudovicYOL/site-web-2018.git /site-web/beta
 
-COPY copy-website-from-git /usr/local/bin/copy-website-from-git
-RUN chmod +x /usr/local/bin/copy-website-from-git
+RUN rm -rf /usr/share/nginx/html \
+ && ln -s /site-web /usr/share/nginx/html
 
-CMD ["/usr/local/bin/copy-website-from-git"]
-
+CMD ["nginx", "-g", "daemon off;"]
